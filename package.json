@@ -1,0 +1,37 @@
+{
+  "name": "native-json",
+  "version": "0.0.0",
+  "description": "access the v8::JSON object and its methods (Parse, Stringify) from native c++ code even in older versions of node",
+  "author": "Michael Ira Krufky <mkrufky@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mkrufky/node-native-json.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mkrufky/node-native-json/issues"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "nodejs",
+    "node.js",
+    "javascript",
+    "c",
+    "cc",
+    "cpp",
+    "c++",
+    "plus",
+    "compat",
+    "native",
+    "addon",
+    "v8",
+    "json",
+    "parse",
+    "stringify"
+  ],
+  "main": "include_dirs.js",
+  "dependencies": {
+    "nan": "^2.0.0"
+  }
+}
