@@ -7,19 +7,19 @@ namespace Native {
 
 class JSON {
 public:
-  static inline v8::Local<v8::Value> Parse(v8::Local<v8::Value> jsonString)
+  static v8::Local<v8::Value> Parse(v8::Local<v8::Value> jsonString)
   {
-    return JSON::instance().call("parse", jsonString);
+    return JSON::instance().parse(jsonString);
   }
 
-  static inline v8::Local<v8::Value> Stringify(v8::Local<v8::Value> jsonObject)
+  static v8::Local<v8::Value> Stringify(v8::Local<v8::Value> jsonObject)
   {
-    return JSON::instance().call("stringify", jsonObject);
+    return JSON::instance().stringify(jsonObject);
   }
 
 private:
-  Nan::Persistent<v8::Object> m_persistent;
-  const char *m_objectName;
+  Nan::Callback m_cb_parse;
+  Nan::Callback m_cb_stringify;
 
   static JSON& instance()
   {
@@ -28,52 +28,40 @@ private:
   }
 
   JSON()
-   : m_objectName("JSON")
   {
-    v8::Local<v8::Object> obj = Nan::New<v8::Object>();
-    m_persistent.Reset(obj);
-
-    v8::Local<v8::Value> objectName = Nan::New(m_objectName).ToLocalChecked();
-    v8::Local<v8::Value> globalJSON = Nan::GetCurrentContext()->Global()->Get(objectName);
+    v8::Local<v8::Value> globalJSON = Nan::GetCurrentContext()->Global()->Get(Nan::New("JSON").ToLocalChecked());
 
     if (globalJSON->IsObject()) {
-      obj->Set(objectName, globalJSON);
+      v8::Local<v8::Value> parseMethod = globalJSON->ToObject()->Get(Nan::New("parse").ToLocalChecked());
+
+      if (!parseMethod.IsEmpty() && parseMethod->IsFunction()) {
+        m_cb_parse.Reset(v8::Local<v8::Function>::Cast(parseMethod));
+      }
+
+      v8::Local<v8::Value> stringifyMethod = globalJSON->ToObject()->Get(Nan::New("stringify").ToLocalChecked());
+
+      if (!stringifyMethod.IsEmpty() && stringifyMethod->IsFunction()) {
+        m_cb_stringify.Reset(v8::Local<v8::Function>::Cast(stringifyMethod));
+      }
     }
   }
 
   ~JSON()
   {
-    m_persistent.Reset();
+    m_cb_parse.Reset();
+    m_cb_stringify.Reset();
   }
 
-  v8::Local<v8::Value> getMethod(v8::Local<v8::Object> &obj, const char *method)
+  v8::Local<v8::Value> parse(v8::Local<v8::Value> arg)
   {
-    v8::Local<v8::Object> persistent = Nan::New(m_persistent);
-    v8::Local<v8::String> methodName = Nan::New(method).ToLocalChecked();
-
-    if (!persistent->Has(methodName))
-    {
-      v8::Local<v8::Value> thisMethod = obj->Get(methodName);
-
-      if (thisMethod.IsEmpty() || !thisMethod->IsFunction()) {
-        return Nan::Undefined();
-      }
-
-      persistent->Set(methodName, thisMethod);
-
-      return thisMethod;
-    }
-    return persistent->Get(methodName);
+    return m_cb_parse.Call(1, &arg);
   }
 
-  v8::Local<v8::Value> call(const char *method, v8::Local<v8::Value> arg)
+  v8::Local<v8::Value> stringify(v8::Local<v8::Value> arg)
   {
-    v8::Local<v8::Object> json = Nan::New(m_persistent)->Get(Nan::New(m_objectName).ToLocalChecked())->ToObject();
-
-    v8::Local<v8::Function> methodFunction = v8::Local<v8::Function>::Cast(getMethod(json, method));
-
-    return methodFunction->Call(json, 1, &arg);
+    return m_cb_stringify.Call(1, &arg);
   }
+
 #if __cplusplus <= 199711L
 private:
   JSON(JSON const&);
