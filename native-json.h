@@ -17,7 +17,7 @@
 namespace Native {
 
 class JSON {
-public:
+ public:
   static v8::Local<v8::Value> Parse(v8::Local<v8::Value> jsonString)
   {
     return JSON::instance().parse(jsonString);
@@ -28,7 +28,7 @@ public:
     return JSON::instance().stringify(jsonObject);
   }
 
-private:
+ private:
   Nan::Callback m_cb_parse;
   Nan::Callback m_cb_stringify;
 
@@ -74,11 +74,11 @@ private:
   }
 
 #if __cplusplus <= 199711L
-private:
+ private:
   JSON(JSON const&);
   void operator=(JSON const&);
 #else
-public:
+ public:
   JSON(JSON const&)           = delete;
   void operator=(JSON const&) = delete;
 #endif
