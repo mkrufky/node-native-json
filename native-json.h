@@ -18,13 +18,11 @@ namespace Native {
 
 class JSON {
  public:
-  static v8::Local<v8::Value> Parse(v8::Local<v8::Value> jsonString)
-  {
+  static v8::Local<v8::Value> Parse(v8::Local<v8::Value> jsonString) {
     return JSON::instance().parse(jsonString);
   }
 
-  static v8::Local<v8::Value> Stringify(v8::Local<v8::Value> jsonObject)
-  {
+  static v8::Local<v8::Value> Stringify(v8::Local<v8::Value> jsonObject) {
     return JSON::instance().stringify(jsonObject);
   }
 
@@ -32,14 +30,12 @@ class JSON {
   Nan::Callback m_cb_parse;
   Nan::Callback m_cb_stringify;
 
-  static JSON& instance()
-  {
+  static JSON& instance() {
     static JSON i;
     return i;
   }
 
-  JSON()
-  {
+  JSON() {
     v8::Local<v8::Value> globalJSON = Nan::GetCurrentContext()->Global()->Get(Nan::New("JSON").ToLocalChecked());
 
     if (globalJSON->IsObject()) {
@@ -57,19 +53,16 @@ class JSON {
     }
   }
 
-  ~JSON()
-  {
+  ~JSON() {
     m_cb_parse.Reset();
     m_cb_stringify.Reset();
   }
 
-  v8::Local<v8::Value> parse(v8::Local<v8::Value> arg)
-  {
+  v8::Local<v8::Value> parse(v8::Local<v8::Value> arg) {
     return m_cb_parse.Call(1, &arg);
   }
 
-  v8::Local<v8::Value> stringify(v8::Local<v8::Value> arg)
-  {
+  v8::Local<v8::Value> stringify(v8::Local<v8::Value> arg) {
     return m_cb_stringify.Call(1, &arg);
   }
 
