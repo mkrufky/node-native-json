@@ -12,6 +12,12 @@
     "url": "https://github.com/mkrufky/node-native-json/issues"
   },
   "keywords": [
+    "v8",
+    "json",
+    "parse",
+    "stringify",
+    "native",
+    "addon",
     "node",
     "js",
     "nodejs",
@@ -22,13 +28,7 @@
     "cpp",
     "c++",
     "plus",
-    "compat",
-    "native",
-    "addon",
-    "v8",
-    "json",
-    "parse",
-    "stringify"
+    "compat"
   ],
   "main": "include_dirs.js",
   "scripts": {
