@@ -36,16 +36,21 @@ class JSON {
   }
 
   JSON() {
-    v8::Local<v8::Value> globalJSON = Nan::GetCurrentContext()->Global()->Get(Nan::New("JSON").ToLocalChecked());
+    v8::Local<v8::Value> globalJSON =
+      Nan::GetCurrentContext()->Global()->Get(
+        Nan::New("JSON").ToLocalChecked()
+      );
 
     if (globalJSON->IsObject()) {
-      v8::Local<v8::Value> parseMethod = globalJSON->ToObject()->Get(Nan::New("parse").ToLocalChecked());
+      v8::Local<v8::Value> parseMethod =
+        globalJSON->ToObject()->Get(Nan::New("parse").ToLocalChecked());
 
       if (!parseMethod.IsEmpty() && parseMethod->IsFunction()) {
         m_cb_parse.Reset(v8::Local<v8::Function>::Cast(parseMethod));
       }
 
-      v8::Local<v8::Value> stringifyMethod = globalJSON->ToObject()->Get(Nan::New("stringify").ToLocalChecked());
+      v8::Local<v8::Value> stringifyMethod =
+        globalJSON->ToObject()->Get(Nan::New("stringify").ToLocalChecked());
 
       if (!stringifyMethod.IsEmpty() && stringifyMethod->IsFunction()) {
         m_cb_stringify.Reset(v8::Local<v8::Function>::Cast(stringifyMethod));
