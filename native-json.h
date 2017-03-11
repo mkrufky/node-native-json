@@ -9,8 +9,8 @@
  ********************************************************************/
 
 
-#ifndef __NATIVE_JSON_H__
-#define __NATIVE_JSON_H__
+#ifndef NATIVE_JSON_H_
+#define NATIVE_JSON_H_
 
 #include <nan.h>
 
@@ -86,4 +86,4 @@ public:
 
 }
 
-#endif /* __NATIVE_JSON_H__ */
+#endif /* NATIVE_JSON_H_ */
