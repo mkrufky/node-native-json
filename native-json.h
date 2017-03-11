@@ -72,10 +72,12 @@ class JSON {
   }
 
 #if __cplusplus <= 199711L
+
  private:
   JSON(JSON const&);
   void operator=(JSON const&);
 #else
+
  public:
   JSON(JSON const&)           = delete;
   void operator=(JSON const&) = delete;
