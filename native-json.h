@@ -1,3 +1,14 @@
+/*********************************************************************
+ * Native JSON for Node.js
+ *
+ * Copyright (c) 2017 Michael Ira Krufky <https://github.com/mkrufky>
+ *
+ * MIT License <https://github.com/mkrufky/native-json/blob/master/LICENSE.md>
+ *
+ * See https://github.com/mkrufky/native-json for the latest update to this file
+ ********************************************************************/
+
+
 #ifndef __NATIVE_JSON_H__
 #define __NATIVE_JSON_H__
 
