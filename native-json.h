@@ -84,6 +84,6 @@ public:
 #endif
 };
 
-}
+} /* namespace Native */
 
 #endif /* NATIVE_JSON_H_ */
