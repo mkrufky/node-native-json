@@ -31,7 +31,16 @@
     "stringify"
   ],
   "main": "include_dirs.js",
+  "scripts": {
+    "test": "tap --gc test/js/*-test.js",
+    "rebuild-tests": "node-gyp rebuild --msvs_version=2013 --directory test"
+  },
   "dependencies": {
-    "nan": "^2.0.0"
+    "nan": "^2.5.1"
+  },
+  "devDependencies": {
+    "bindings": "^1.2.1",
+    "node-gyp": "^3.5.0",
+    "tap": "~0.7.1"
   }
 }
