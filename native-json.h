@@ -69,10 +69,12 @@ class JSON {
   Nan::Callback m_cb_stringify;
 #endif
 
+#if (NATIVE_JSON_H_NEED_PARSE + NATIVE_JSON_H_NEED_STRINGIFY)
   static JSON& instance() {
     static JSON i;
     return i;
   }
+#endif
 
   JSON() {
 #if (NATIVE_JSON_H_NEED_PARSE + NATIVE_JSON_H_NEED_STRINGIFY)
