@@ -18,11 +18,13 @@ namespace Native {
 
 class JSON {
  public:
-  static v8::Local<v8::Value> Parse(v8::Local<v8::String> jsonString) {
+  static
+  inline v8::Local<v8::Value> Parse(v8::Local<v8::String> jsonString) {
     return JSON::instance().parse(jsonString);
   }
 
-  static v8::Local<v8::Value> Stringify(v8::Local<v8::Value> jsonObject) {
+  static
+  inline v8::Local<v8::Value> Stringify(v8::Local<v8::Value> jsonObject) {
     return JSON::instance().stringify(jsonObject);
   }
 
@@ -63,11 +65,11 @@ class JSON {
     m_cb_stringify.Reset();
   }
 
-  v8::Local<v8::Value> parse(v8::Local<v8::Value> arg) {
+  inline v8::Local<v8::Value> parse(v8::Local<v8::Value> arg) {
     return m_cb_parse.Call(1, &arg);
   }
 
-  v8::Local<v8::Value> stringify(v8::Local<v8::Value> arg) {
+  inline v8::Local<v8::Value> stringify(v8::Local<v8::Value> arg) {
     return m_cb_stringify.Call(1, &arg);
   }
 
