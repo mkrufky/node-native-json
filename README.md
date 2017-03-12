@@ -15,7 +15,15 @@ native-json is a header package for building c++ native addons for node.js that 
 
 To access the javascript function `JSON.parse()` from your c++ code, call `Native::JSON::Parse()` where you would normally call `v8::JSON::Parse()`, which would otherwise not be available in versions of node.js older than 0.12.x
 
+``` c++
+v8::Local<v8::Value> Parse(v8::Local<v8::String> jsonString)
+```
+
 To access the javascript function `JSON.stringify()` from your c++ code, call `Native::JSON::Stringify()` where you would normally call `v8::JSON::Stringify()`, which would otherwise not be available in versions of node.js older than 7.x
+
+``` c++
+v8::Local<v8::Value> Stringify(v8::Local<v8::Object> jsonObject)
+```
 
 Simply add **nan** and **native-json** as dependencies in the *package.json* of your Node addon:
 
