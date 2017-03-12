@@ -1,6 +1,6 @@
 # native-json
 
-Access the `v8::JSON` object methods (`Parse`, `Stringify`) from native c++ addons across all versions of node.js
+Access the `v8::JSON` object methods `Parse` & `Stringify` from native c++ addons across all versions of node.js
 
 [![NPM](https://nodei.co/npm/native-json.png?downloads=true&downloadRank=true)](https://nodei.co/npm/native-json/)
 
