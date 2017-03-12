@@ -20,12 +20,12 @@ class JSON {
  public:
   static
   inline v8::Local<v8::Value> Parse(v8::Local<v8::String> jsonString) {
-    return JSON::instance().parse(jsonString);
+    return instance().parse(jsonString);
   }
 
   static
   inline v8::Local<v8::Value> Stringify(v8::Local<v8::Value> jsonObject) {
-    return JSON::instance().stringify(jsonObject);
+    return instance().stringify(jsonObject);
   }
 
  private:
