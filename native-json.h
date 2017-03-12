@@ -14,13 +14,19 @@
 
 #include <nan.h>
 
+#define NATIVE_JSON_H_NEED_PARSE 1
+
 namespace Native {
 
 class JSON {
  public:
   static
   inline v8::Local<v8::Value> Parse(v8::Local<v8::String> jsonString) {
+#if NATIVE_JSON_H_NEED_PARSE
     return instance().parse(jsonString);
+#else
+    return v8::JSON::Parse(jsonString);
+#endif
   }
 
   static
@@ -29,7 +35,9 @@ class JSON {
   }
 
  private:
+#if NATIVE_JSON_H_NEED_PARSE
   Nan::Callback m_cb_parse;
+#endif
   Nan::Callback m_cb_stringify;
 
   static JSON& instance() {
@@ -44,12 +52,14 @@ class JSON {
       );
 
     if (globalJSON->IsObject()) {
+#if NATIVE_JSON_H_NEED_PARSE
       v8::Local<v8::Value> parseMethod =
         globalJSON->ToObject()->Get(Nan::New("parse").ToLocalChecked());
 
       if (!parseMethod.IsEmpty() && parseMethod->IsFunction()) {
         m_cb_parse.Reset(v8::Local<v8::Function>::Cast(parseMethod));
       }
+#endif
 
       v8::Local<v8::Value> stringifyMethod =
         globalJSON->ToObject()->Get(Nan::New("stringify").ToLocalChecked());
@@ -61,13 +71,17 @@ class JSON {
   }
 
   ~JSON() {
+#if NATIVE_JSON_H_NEED_PARSE
     m_cb_parse.Reset();
+#endif
     m_cb_stringify.Reset();
   }
 
+#if NATIVE_JSON_H_NEED_PARSE
   inline v8::Local<v8::Value> parse(v8::Local<v8::Value> arg) {
     return m_cb_parse.Call(1, &arg);
   }
+#endif
 
   inline v8::Local<v8::Value> stringify(v8::Local<v8::Value> arg) {
     return m_cb_stringify.Call(1, &arg);
