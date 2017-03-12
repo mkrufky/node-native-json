@@ -1,13 +1,13 @@
 # native-json
 
-Access the v8::JSON object methods (Parse, Stringify) from native c++ addons across all versions of node.js
+Access the `v8::JSON` object methods (`Parse`, `Stringify`) from native c++ addons across all versions of node.js
 
 [![NPM](https://nodei.co/npm/native-json.png?downloads=true&downloadRank=true)](https://nodei.co/npm/native-json/)
 
 [![Build Status](https://api.travis-ci.org/mkrufky/node-native-json.svg?branch=master)](http://travis-ci.org/mkrufky/node-native-json)
 [![Build status](https://ci.appveyor.com/api/projects/status/p5cgmixxpftd8hxa?svg=true)](https://ci.appveyor.com/project/mkrufky/node-native-json)
 
-native-json is a header package for building c++ native addons for node.js that is meant to complement **[nan](https://github.com/nodejs/nan)** by adding an interface to the v8::JSON object's Parse and Stringify methods that can be relied upon regardless of the version of node.js that the addon is being built against.
+native-json is a header package for building c++ native addons for node.js that is meant to complement **[nan](https://github.com/nodejs/nan)** by adding an interface to the `v8::JSON` object's `Parse` and `Stringify` methods that can be relied upon regardless of the version of node.js that the addon is being built against.
 
 <a name="usage"></a>
 
