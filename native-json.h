@@ -18,7 +18,7 @@ namespace Native {
 
 class JSON {
  public:
-  static v8::Local<v8::Value> Parse(v8::Local<v8::Value> jsonString) {
+  static v8::Local<v8::Value> Parse(v8::Local<v8::String> jsonString) {
     return JSON::instance().parse(jsonString);
   }
 
