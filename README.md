@@ -10,9 +10,10 @@ native-json is a header package for building c++ native addons for node.js that 
 <a name="usage"></a>
 ## Usage
 
-Simply add **native-json** as a dependency in the *package.json* of your Node addon:
+Simply add **nan** and **native-json** as dependencies in the *package.json* of your Node addon:
 
 ``` bash
+$ npm install --save nan
 $ npm install --save native-json
 ```
 
@@ -30,7 +31,7 @@ This works like a `-I<path-to-native-json>` when compiling your addon.
 <a name="tests"></a>
 ### Tests
 
-To run the NAN tests do:
+To run the native-json tests do:
 
 ``` sh
 npm install
