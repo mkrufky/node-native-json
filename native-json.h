@@ -75,6 +75,7 @@ class JSON {
   }
 
   JSON() {
+#if (NATIVE_JSON_H_NEED_PARSE + NATIVE_JSON_H_NEED_STRINGIFY)
     v8::Local<v8::Value> globalJSON =
       Nan::GetCurrentContext()->Global()->Get(
         Nan::New("JSON").ToLocalChecked()
@@ -99,6 +100,7 @@ class JSON {
       }
 #endif
     }
+#endif
   }
 
   ~JSON() {
