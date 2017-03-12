@@ -42,7 +42,7 @@ class JSON {
     return instance().parse(jsonString);
 #else
 #if (NODE_MAJOR_VERSION >= 7)
-    return v8::JSON::Parse(Nan::GetCurrentContext(), jsonString);
+    return v8::JSON::Parse(Nan::GetCurrentContext(), jsonString).ToLocalChecked();
 #else
     return v8::JSON::Parse(jsonString);
 #endif
@@ -54,7 +54,7 @@ class JSON {
 #if NATIVE_JSON_H_NEED_STRINGIFY
     return instance().stringify(jsonObject);
 #else
-    return v8::JSON::Stringify(Nan::GetCurrentContext(), jsonObject)
+    return v8::JSON::Stringify(Nan::GetCurrentContext(), jsonObject).ToLocalChecked();
 #endif
   }
 
