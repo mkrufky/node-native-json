@@ -14,8 +14,23 @@
 
 #include <nan.h>
 
+#if defined(NODE_MAJOR_VERSION) && defined(NODE_MINOR_VERSION)
+#if (NODE_MAJOR_VERSION >= 7)
+#define NATIVE_JSON_H_NEED_PARSE 0
+#define NATIVE_JSON_H_NEED_STRINGIFY 0
+#else
+#if ((NODE_MAJOR_VERSION == 0) && (NODE_MINOR_VERSION < 12))
 #define NATIVE_JSON_H_NEED_PARSE 1
 #define NATIVE_JSON_H_NEED_STRINGIFY 1
+#else
+#define NATIVE_JSON_H_NEED_PARSE 0
+#define NATIVE_JSON_H_NEED_STRINGIFY 1
+#endif
+#endif
+#else
+#define NATIVE_JSON_H_NEED_PARSE 1
+#define NATIVE_JSON_H_NEED_STRINGIFY 1
+#endif
 
 namespace Native {
 
@@ -26,7 +41,11 @@ class JSON {
 #if NATIVE_JSON_H_NEED_PARSE
     return instance().parse(jsonString);
 #else
+#if (NODE_MAJOR_VERSION >= 7)
+    return v8::JSON::Parse(Nan::GetCurrentContext(), jsonString);
+#else
     return v8::JSON::Parse(jsonString);
+#endif
 #endif
   }
 
