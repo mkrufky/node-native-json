@@ -9,7 +9,7 @@
 #include <native-json.h>
 
 NAN_METHOD(Stringify) {
-  info.GetReturnValue().Set(Native::JSON::Stringify(info[0]));
+  info.GetReturnValue().Set(Native::JSON::Stringify(info[0]->ToObject()));
 }
 
 NAN_MODULE_INIT(Init) {

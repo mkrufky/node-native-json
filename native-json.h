@@ -50,7 +50,7 @@ class JSON {
   }
 
   static
-  inline v8::Local<v8::Value> Stringify(v8::Local<v8::Value> jsonObject) {
+  inline v8::Local<v8::Value> Stringify(v8::Local<v8::Object> jsonObject) {
 #if NATIVE_JSON_H_NEED_STRINGIFY
     return instance().stringify(jsonObject);
 #else
