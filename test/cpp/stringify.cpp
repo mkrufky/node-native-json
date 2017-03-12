@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017 Michael Ira Krufky
  *
- * MIT License <https://github.com/mkrufky/native-json/blob/master/LICENSE.md>
+ * MIT License <https://github.com/mkrufky/node-native-json/blob/master/LICENSE.md>
  ********************************************************************/
 
 #include <native-json.h>
