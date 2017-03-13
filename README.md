@@ -23,6 +23,7 @@ To access the javascript function `JSON.stringify()` from your c++ code, call `N
 
 ``` c++
 v8::Local<v8::String> Stringify(v8::Local<v8::Object> jsonObject)
+v8::Local<v8::String> Stringify(v8::Local<v8::Object> jsonObject, v8::Local<v8::String> gap)
 ```
 
 Simply add **nan** and **native-json** as dependencies in the *package.json* of your Node addon:

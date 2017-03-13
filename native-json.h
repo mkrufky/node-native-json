@@ -52,10 +52,20 @@ class JSON {
   }
 
   static
-  inline v8::Local<v8::String> Stringify(v8::Local<v8::Object> jsonObject,
-    v8::Local<v8::String> gap = v8::Local<v8::String>()) {
+  inline v8::Local<v8::String> Stringify(v8::Local<v8::Object> jsonObject) {
 #if NATIVE_JSON_H_NEED_STRINGIFY
     return instance().stringify(jsonObject)->ToString();
+#else
+    return v8::JSON::Stringify(Nan::GetCurrentContext(),
+      jsonObject).ToLocalChecked();
+#endif
+  }
+
+  static
+  inline v8::Local<v8::String> Stringify(v8::Local<v8::Object> jsonObject,
+    v8::Local<v8::String> gap) {
+#if NATIVE_JSON_H_NEED_STRINGIFY
+    return instance().stringify(jsonObject, gap)->ToString();
 #else
     return v8::JSON::Stringify(Nan::GetCurrentContext(),
       jsonObject, gap).ToLocalChecked();
@@ -125,6 +135,16 @@ class JSON {
 #if NATIVE_JSON_H_NEED_STRINGIFY
   inline v8::Local<v8::Value> stringify(v8::Local<v8::Value> arg) {
     return m_cb_stringify.Call(1, &arg);
+  }
+
+  inline v8::Local<v8::Value> stringify(v8::Local<v8::Value> arg,
+    v8::Local<v8::String> gap) {
+    v8::Local<v8::Value> argv[] = {
+      arg,
+      Nan::Null(),
+      gap
+    };
+    return m_cb_stringify.Call(3, argv);
   }
 #endif
 };
