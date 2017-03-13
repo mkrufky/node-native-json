@@ -63,6 +63,7 @@ class JSON {
   }
 
  private:
+  NAN_DISALLOW_ASSIGN_COPY_MOVE(JSON)
 #if NATIVE_JSON_H_NEED_PARSE
   Nan::Callback m_cb_parse;
 #endif
@@ -125,18 +126,6 @@ class JSON {
   inline v8::Local<v8::Value> stringify(v8::Local<v8::Value> arg) {
     return m_cb_stringify.Call(1, &arg);
   }
-#endif
-
-#if __cplusplus <= 199711L
-
- private:
-  JSON(JSON const&);
-  void operator=(JSON const&);
-#else
-
- public:
-  JSON(JSON const&)           = delete;
-  void operator=(JSON const&) = delete;
 #endif
 };
 
