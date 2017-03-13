@@ -52,9 +52,9 @@ class JSON {
   }
 
   static
-  inline v8::Local<v8::Value> Stringify(v8::Local<v8::Object> jsonObject) {
+  inline v8::Local<v8::String> Stringify(v8::Local<v8::Object> jsonObject) {
 #if NATIVE_JSON_H_NEED_STRINGIFY
-    return instance().stringify(jsonObject);
+    return instance().stringify(jsonObject)->ToString();
 #else
     return v8::JSON::Stringify(Nan::GetCurrentContext(),
       jsonObject).ToLocalChecked();
