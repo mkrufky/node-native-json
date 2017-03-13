@@ -36,10 +36,10 @@ This works like a `-I<path-to-native-json>` when compiling your addon.
 ## API
 
 ``` c++
-v8::Local<v8::Value> Parse(v8::Local<v8::String> jsonString);
+Nan::MaybeLocal<v8::Value> Parse(v8::Local<v8::String> jsonString);
 
-v8::Local<v8::String> Stringify(v8::Local<v8::Object> jsonObject);
-v8::Local<v8::String> Stringify(v8::Local<v8::Object> jsonObject, v8::Local<v8::String> gap);
+Nan::MaybeLocal<v8::String> Stringify(v8::Local<v8::Object> jsonObject);
+Nan::MaybeLocal<v8::String> Stringify(v8::Local<v8::Object> jsonObject, v8::Local<v8::String> gap);
 ```
 
 To access the javascript function `JSON.parse()` from your c++ code, call `Native::JSON::Parse()` where you would normally call `v8::JSON::Parse()`, which would otherwise not be available in versions of node.js older than 0.12.x
@@ -48,7 +48,8 @@ To access the javascript function `JSON.parse()` from your c++ code, call `Nativ
 v8::Local<v8::String> jsonString =
   Nan::New("{ \"JSON\": \"object\" }").ToLocalChecked();
 
-v8::Local<v8::Value> parsedValue = Native::JSON::Parse(jsonString);
+v8::Local<v8::Value> parsedValue =
+  Native::JSON::Parse(jsonString).ToLocalChecked();
 ```
 
 To access the javascript function `JSON.stringify()` from your c++ code, call `Native::JSON::Stringify()` where you would normally call `v8::JSON::Stringify()`, which would otherwise not be available in versions of node.js older than 7.x
@@ -56,7 +57,8 @@ To access the javascript function `JSON.stringify()` from your c++ code, call `N
 ``` c++
 v8::Local<v8::Object> object;
 
-v8::Local<v8::String> stringified = Native::JSON::Stringify(object);
+v8::Local<v8::String> stringified =
+  Native::JSON::Stringify(object).ToLocalChecked();
 ```
 
 <a name="tests"></a>

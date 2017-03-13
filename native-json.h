@@ -37,38 +37,38 @@ namespace Native {
 
 class JSON {
  public:
-  static
-  inline v8::Local<v8::Value> Parse(v8::Local<v8::String> jsonString) {
+  static inline
+  Nan::MaybeLocal<v8::Value> Parse(v8::Local<v8::String> jsonString) {
 #if NATIVE_JSON_H_NEED_PARSE
     return instance().parse(jsonString);
 #else
 #if (NODE_MAJOR_VERSION >= 7)
     return v8::JSON::Parse(Nan::GetCurrentContext(),
-      jsonString).ToLocalChecked();
+      jsonString);
 #else
     return v8::JSON::Parse(jsonString);
 #endif
 #endif
   }
 
-  static
-  inline v8::Local<v8::String> Stringify(v8::Local<v8::Object> jsonObject) {
+  static inline
+  Nan::MaybeLocal<v8::String> Stringify(v8::Local<v8::Object> jsonObject) {
 #if NATIVE_JSON_H_NEED_STRINGIFY
     return instance().stringify(jsonObject)->ToString();
 #else
     return v8::JSON::Stringify(Nan::GetCurrentContext(),
-      jsonObject).ToLocalChecked();
+      jsonObject);
 #endif
   }
 
-  static
-  inline v8::Local<v8::String> Stringify(v8::Local<v8::Object> jsonObject,
+  static inline
+  Nan::MaybeLocal<v8::String> Stringify(v8::Local<v8::Object> jsonObject,
     v8::Local<v8::String> gap) {
 #if NATIVE_JSON_H_NEED_STRINGIFY
     return instance().stringify(jsonObject, gap)->ToString();
 #else
     return v8::JSON::Stringify(Nan::GetCurrentContext(),
-      jsonObject, gap).ToLocalChecked();
+      jsonObject, gap);
 #endif
   }
 

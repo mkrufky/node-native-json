@@ -9,7 +9,9 @@
 #include <native-json.h>
 
 NAN_METHOD(Parse) {
-  info.GetReturnValue().Set(Native::JSON::Parse(info[0]->ToString()));
+  info.GetReturnValue().Set(
+    Native::JSON::Parse(info[0]->ToString()).ToLocalChecked()
+  );
 }
 
 NAN_MODULE_INIT(Init) {
