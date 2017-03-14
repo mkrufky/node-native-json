@@ -47,6 +47,7 @@ To access the javascript function `JSON.parse()` from your c++ code, call `Nativ
 ``` c++
 v8::Local<v8::String> jsonString =
   Nan::New("{ \"JSON\": \"object\" }").ToLocalChecked();
+
 v8::Local<v8::Value> parsedValue = Native::JSON::Parse(jsonString);
 ```
 
@@ -54,6 +55,7 @@ To access the javascript function `JSON.stringify()` from your c++ code, call `N
 
 ``` c++
 v8::Local<v8::Object> object;
+
 v8::Local<v8::String> stringified = Native::JSON::Stringify(object);
 ```
 
