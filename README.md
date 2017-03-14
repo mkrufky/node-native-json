@@ -45,7 +45,8 @@ v8::Local<v8::String> Stringify(v8::Local<v8::Object> jsonObject, v8::Local<v8::
 To access the javascript function `JSON.parse()` from your c++ code, call `Native::JSON::Parse()` where you would normally call `v8::JSON::Parse()`, which would otherwise not be available in versions of node.js older than 0.12.x
 
 ``` c++
-v8::Local<v8::String> jsonString = Nan::New("{ \"JSON\": \"object\" }").ToLocalChecked();
+v8::Local<v8::String> jsonString =
+  Nan::New("{ \"JSON\": \"object\" }").ToLocalChecked();
 v8::Local<v8::Value> parsedValue = Native::JSON::Parse(jsonString);
 ```
 
