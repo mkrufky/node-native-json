@@ -90,15 +90,15 @@ class JSON {
 
   JSON() {
 #if (NATIVE_JSON_H_NEED_PARSE + NATIVE_JSON_H_NEED_STRINGIFY)
-    v8::Local<v8::Value> globalJSON =
-      Nan::GetCurrentContext()->Global()->Get(
-        Nan::New("JSON").ToLocalChecked()
-      );
+    v8::Local<v8::Value> globalJSON = Nan::Get(
+      Nan::GetCurrentContext()->Global(), Nan::New("JSON").ToLocalChecked()
+    ).ToLocalChecked();
 
     if (globalJSON->IsObject()) {
 #if NATIVE_JSON_H_NEED_PARSE
-      v8::Local<v8::Value> parseMethod =
-        globalJSON->ToObject()->Get(Nan::New("parse").ToLocalChecked());
+      v8::Local<v8::Value> parseMethod = Nan::Get(
+        globalJSON->ToObject(), Nan::New("parse").ToLocalChecked()
+      ).ToLocalChecked();
 
       if (!parseMethod.IsEmpty() && parseMethod->IsFunction()) {
         m_cb_parse.Reset(v8::Local<v8::Function>::Cast(parseMethod));
@@ -106,8 +106,9 @@ class JSON {
 #endif
 
 #if NATIVE_JSON_H_NEED_STRINGIFY
-      v8::Local<v8::Value> stringifyMethod =
-        globalJSON->ToObject()->Get(Nan::New("stringify").ToLocalChecked());
+      v8::Local<v8::Value> stringifyMethod = Nan::Get(
+        globalJSON->ToObject(), Nan::New("stringify").ToLocalChecked()
+      ).ToLocalChecked();
 
       if (!stringifyMethod.IsEmpty() && stringifyMethod->IsFunction()) {
         m_cb_stringify.Reset(v8::Local<v8::Function>::Cast(stringifyMethod));
