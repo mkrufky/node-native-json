@@ -40,6 +40,7 @@ class JSON {
   static inline
   Nan::MaybeLocal<v8::Value> Parse(v8::Local<v8::String> jsonString) {
 #if NATIVE_JSON_H_NEED_PARSE
+    Nan::HandleScope scope;
     return instance().parse(jsonString);
 #else
 #if (NODE_MAJOR_VERSION >= 7)
@@ -53,6 +54,7 @@ class JSON {
   static inline
   Nan::MaybeLocal<v8::String> Stringify(v8::Local<v8::Object> jsonObject) {
 #if NATIVE_JSON_H_NEED_STRINGIFY
+    Nan::HandleScope scope;
     return instance().stringify(jsonObject)->ToString();
 #else
     return v8::JSON::Stringify(Nan::GetCurrentContext(), jsonObject);
@@ -63,6 +65,7 @@ class JSON {
   Nan::MaybeLocal<v8::String> Stringify(v8::Local<v8::Object> jsonObject,
     v8::Local<v8::String> gap) {
 #if NATIVE_JSON_H_NEED_STRINGIFY
+    Nan::HandleScope scope;
     return instance().stringify(jsonObject, gap)->ToString();
 #else
     return v8::JSON::Stringify(Nan::GetCurrentContext(), jsonObject, gap);
