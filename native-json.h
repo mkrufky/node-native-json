@@ -43,8 +43,7 @@ class JSON {
     return instance().parse(jsonString);
 #else
 #if (NODE_MAJOR_VERSION >= 7)
-    return v8::JSON::Parse(Nan::GetCurrentContext(),
-      jsonString);
+    return v8::JSON::Parse(Nan::GetCurrentContext(), jsonString);
 #else
     return v8::JSON::Parse(jsonString);
 #endif
@@ -56,8 +55,7 @@ class JSON {
 #if NATIVE_JSON_H_NEED_STRINGIFY
     return instance().stringify(jsonObject)->ToString();
 #else
-    return v8::JSON::Stringify(Nan::GetCurrentContext(),
-      jsonObject);
+    return v8::JSON::Stringify(Nan::GetCurrentContext(), jsonObject);
 #endif
   }
 
@@ -67,8 +65,7 @@ class JSON {
 #if NATIVE_JSON_H_NEED_STRINGIFY
     return instance().stringify(jsonObject, gap)->ToString();
 #else
-    return v8::JSON::Stringify(Nan::GetCurrentContext(),
-      jsonObject, gap);
+    return v8::JSON::Stringify(Nan::GetCurrentContext(), jsonObject, gap);
 #endif
   }
 
