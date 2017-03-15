@@ -55,7 +55,7 @@ v8::Local<v8::Value> parsedValue =
 To access the javascript function `JSON.stringify()` from your c++ code, call `Native::JSON::Stringify()` where you would normally call `v8::JSON::Stringify()`, which would otherwise not be available in versions of node.js older than 7.x
 
 ``` c++
-v8::Local<v8::Object> object = parsedValue->ToObject();
+v8::Local<v8::Object> object = Nan::To<v8::Object>(parsedValue);
 
 v8::Local<v8::String> stringified =
   Native::JSON::Stringify(object).ToLocalChecked();

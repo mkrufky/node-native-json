@@ -97,7 +97,8 @@ class JSON {
     if (globalJSON->IsObject()) {
 #if NATIVE_JSON_H_NEED_PARSE
       v8::Local<v8::Value> parseMethod = Nan::Get(
-        globalJSON->ToObject(), Nan::New("parse").ToLocalChecked()
+        Nan::To<v8::Object>(globalJSON).ToLocalChecked(),
+        Nan::New("parse").ToLocalChecked()
       ).ToLocalChecked();
 
       if (!parseMethod.IsEmpty() && parseMethod->IsFunction()) {
@@ -107,7 +108,8 @@ class JSON {
 
 #if NATIVE_JSON_H_NEED_STRINGIFY
       v8::Local<v8::Value> stringifyMethod = Nan::Get(
-        globalJSON->ToObject(), Nan::New("stringify").ToLocalChecked()
+        Nan::To<v8::Object>(globalJSON).ToLocalChecked(),
+        Nan::New("stringify").ToLocalChecked()
       ).ToLocalChecked();
 
       if (!stringifyMethod.IsEmpty() && stringifyMethod->IsFunction()) {
