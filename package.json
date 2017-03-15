@@ -1,6 +1,6 @@
 {
   "name": "native-json",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Access the v8::JSON object methods Parse & Stringify from native c++ addons across all versions of node.js",
   "author": "Michael Ira Krufky <mkrufky@gmail.com>",
   "license": "MIT",
