@@ -55,7 +55,7 @@ class JSON {
   Nan::MaybeLocal<v8::String> Stringify(v8::Local<v8::Object> jsonObject) {
     Nan::HandleScope scope;
 #if NATIVE_JSON_H_NEED_STRINGIFY
-    return instance().stringify(jsonObject)->ToString();
+    return Nan::To<v8::String>(instance().stringify(jsonObject));
 #else
     return v8::JSON::Stringify(Nan::GetCurrentContext(), jsonObject);
 #endif
@@ -66,7 +66,7 @@ class JSON {
     v8::Local<v8::String> gap) {
     Nan::HandleScope scope;
 #if NATIVE_JSON_H_NEED_STRINGIFY
-    return instance().stringify(jsonObject, gap)->ToString();
+    return Nan::To<v8::String>(instance().stringify(jsonObject, gap));
 #else
     return v8::JSON::Stringify(Nan::GetCurrentContext(), jsonObject, gap);
 #endif
