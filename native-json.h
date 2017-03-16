@@ -39,37 +39,49 @@ class JSON {
  public:
   static inline
   Nan::MaybeLocal<v8::Value> Parse(v8::Local<v8::String> jsonString) {
-    Nan::HandleScope scope;
+    Nan::EscapableHandleScope scope;
+
 #if NATIVE_JSON_H_NEED_PARSE
-    return instance().parse(jsonString);
+    return scope.Escape(instance().parse(jsonString));
 #else
+    Nan::MaybeLocal<v8::Value> result =
 #if (NODE_MAJOR_VERSION >= 7)
-    return v8::JSON::Parse(Nan::GetCurrentContext(), jsonString);
+      v8::JSON::Parse(Nan::GetCurrentContext(), jsonString);
 #else
-    return v8::JSON::Parse(jsonString);
+      v8::JSON::Parse(jsonString);
 #endif
+    if (result.IsEmpty()) return v8::Local<v8::Value>();
+    return scope.Escape(result.ToLocalChecked());
 #endif
   }
 
   static inline
   Nan::MaybeLocal<v8::String> Stringify(v8::Local<v8::Object> jsonObject) {
-    Nan::HandleScope scope;
+    Nan::EscapableHandleScope scope;
+
+    Nan::MaybeLocal<v8::String> result =
 #if NATIVE_JSON_H_NEED_STRINGIFY
-    return Nan::To<v8::String>(instance().stringify(jsonObject));
+      Nan::To<v8::String>(instance().stringify(jsonObject));
 #else
-    return v8::JSON::Stringify(Nan::GetCurrentContext(), jsonObject);
+      v8::JSON::Stringify(Nan::GetCurrentContext(), jsonObject);
 #endif
+    if (result.IsEmpty()) return v8::Local<v8::String>();
+    return scope.Escape(result.ToLocalChecked());
   }
 
   static inline
   Nan::MaybeLocal<v8::String> Stringify(v8::Local<v8::Object> jsonObject,
     v8::Local<v8::String> gap) {
-    Nan::HandleScope scope;
+    Nan::EscapableHandleScope scope;
+
+    Nan::MaybeLocal<v8::String> result =
 #if NATIVE_JSON_H_NEED_STRINGIFY
-    return Nan::To<v8::String>(instance().stringify(jsonObject, gap));
+      Nan::To<v8::String>(instance().stringify(jsonObject, gap));
 #else
-    return v8::JSON::Stringify(Nan::GetCurrentContext(), jsonObject, gap);
+      v8::JSON::Stringify(Nan::GetCurrentContext(), jsonObject, gap);
 #endif
+    if (result.IsEmpty()) return v8::Local<v8::String>();
+    return scope.Escape(result.ToLocalChecked());
   }
 
  private:
