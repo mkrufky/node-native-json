@@ -44,14 +44,15 @@ class JSON {
 #if NATIVE_JSON_H_NEED_PARSE
     return scope.Escape(instance().parse(jsonString));
 #else
-    Nan::MaybeLocal<v8::Value> result =
 #if (NODE_MAJOR_VERSION >= 7)
+    Nan::MaybeLocal<v8::Value> result =
       v8::JSON::Parse(Nan::GetCurrentContext(), jsonString);
-#else
-      v8::JSON::Parse(jsonString);
-#endif
+
     if (result.IsEmpty()) return v8::Local<v8::Value>();
     return scope.Escape(result.ToLocalChecked());
+#else
+    return scope.Escape(v8::JSON::Parse(jsonString));
+#endif
 #endif
   }
 
