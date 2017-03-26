@@ -115,7 +115,7 @@ class JSON {
       ).ToLocalChecked();
 
       if (!parseMethod.IsEmpty() && parseMethod->IsFunction()) {
-        m_cb_parse.Reset(v8::Local<v8::Function>::Cast(parseMethod));
+        m_cb_parse.Reset(parseMethod.As<v8::Function>());
       }
 #endif
 
@@ -126,7 +126,7 @@ class JSON {
       ).ToLocalChecked();
 
       if (!stringifyMethod.IsEmpty() && stringifyMethod->IsFunction()) {
-        m_cb_stringify.Reset(v8::Local<v8::Function>::Cast(stringifyMethod));
+        m_cb_stringify.Reset(stringifyMethod.As<v8::Function>());
       }
 #endif
     }
