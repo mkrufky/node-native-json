@@ -9,11 +9,21 @@
 #include <native-json.h>
 
 NAN_METHOD(Parse) {
-  info.GetReturnValue().Set(
-    Native::JSON::Parse(
-      Nan::To<v8::String>(info[0]).ToLocalChecked()
-    ).ToLocalChecked()
-  );
+  Nan::MaybeLocal<v8::String> inp = Nan::To<v8::String>(info[0]);
+
+  if (inp.IsEmpty()) {
+    info.GetReturnValue().Set(Nan::Undefined());
+  } else {
+    Nan::MaybeLocal<v8::Value> result = Native::JSON::Parse(
+      inp.ToLocalChecked()
+    );
+
+    if (result.IsEmpty()) {
+      info.GetReturnValue().Set(Nan::Undefined());
+    } else {
+      info.GetReturnValue().Set(result.ToLocalChecked());
+    }
+  }
 }
 
 NAN_MODULE_INIT(Init) {
