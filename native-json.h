@@ -103,32 +103,53 @@ class JSON {
 
   JSON() {
 #if (NATIVE_JSON_H_NEED_PARSE + NATIVE_JSON_H_NEED_STRINGIFY)
-    v8::Local<v8::Value> globalJSON = Nan::Get(
-      Nan::GetCurrentContext()->Global(), Nan::New("JSON").ToLocalChecked()
-    ).ToLocalChecked();
+    Nan::MaybeLocal<v8::Value> maybe_global_json = Nan::Get(
+      Nan::GetCurrentContext()->Global(),
+      Nan::New("JSON").ToLocalChecked()
+    );
 
-    if (globalJSON->IsObject()) {
+    if (!maybe_global_json.IsEmpty()) {
+      v8::Local<v8::Value> val_global_json = maybe_global_json.ToLocalChecked();
+
+      if (val_global_json->IsObject()) {
+        Nan::MaybeLocal<v8::Object> maybe_obj_global_json =
+          Nan::To<v8::Object>(val_global_json);
+
+        if (!maybe_obj_global_json.IsEmpty()) {
+          v8::Local<v8::Object> global_json =
+            maybe_obj_global_json.ToLocalChecked();
+
 #if NATIVE_JSON_H_NEED_PARSE
-      v8::Local<v8::Value> parseMethod = Nan::Get(
-        Nan::To<v8::Object>(globalJSON).ToLocalChecked(),
-        Nan::New("parse").ToLocalChecked()
-      ).ToLocalChecked();
+          Nan::MaybeLocal<v8::Value> maybe_parse_method = Nan::Get(
+            global_json, Nan::New("parse").ToLocalChecked()
+          );
 
-      if (!parseMethod.IsEmpty() && parseMethod->IsFunction()) {
-        m_cb_parse.Reset(parseMethod.As<v8::Function>());
-      }
+          if (!maybe_parse_method.IsEmpty()) {
+            v8::Local<v8::Value> parse_method =
+              maybe_parse_method.ToLocalChecked();
+
+            if (parse_method->IsFunction()) {
+              m_cb_parse.Reset(parse_method.As<v8::Function>());
+            }
+          }
 #endif
 
 #if NATIVE_JSON_H_NEED_STRINGIFY
-      v8::Local<v8::Value> stringifyMethod = Nan::Get(
-        Nan::To<v8::Object>(globalJSON).ToLocalChecked(),
-        Nan::New("stringify").ToLocalChecked()
-      ).ToLocalChecked();
+          Nan::MaybeLocal<v8::Value> maybe_stringify_method = Nan::Get(
+            global_json, Nan::New("stringify").ToLocalChecked()
+          );
 
-      if (!stringifyMethod.IsEmpty() && stringifyMethod->IsFunction()) {
-        m_cb_stringify.Reset(stringifyMethod.As<v8::Function>());
-      }
+          if (!maybe_stringify_method.IsEmpty()) {
+            v8::Local<v8::Value> stringify_method =
+              maybe_stringify_method.ToLocalChecked();
+
+            if (stringify_method->IsFunction()) {
+              m_cb_stringify.Reset(stringify_method.As<v8::Function>());
+            }
+          }
 #endif
+        }
+      }
     }
 #endif
   }
