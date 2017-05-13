@@ -1,3 +1,5 @@
+This project has been merged into `NAN` and is now deprecated. Use `Nan::JSON` from `NAN` v2.6.2 or later. See [Nan::JSON](https://github.com/nodejs/nan/blob/master/doc/json.md)
+
 # native-json
 
 Access the `v8::JSON` object methods `Parse` & `Stringify` from native c++ addons across all versions of node.js
